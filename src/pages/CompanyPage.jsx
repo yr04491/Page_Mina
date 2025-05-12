@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './CompanyPage.css';
 
 const TopBar = () => {
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 900);
+      if (window.innerWidth > 900) setMobileNavOpen(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <header className="topbar">
       <div className="logo">Minakano</div>
-      <nav className="nav-menu">
+      <nav
+        className={`nav-menu${isMobile && mobileNavOpen ? ' open' : ''}`}
+        style={isMobile ? {} : { display: 'flex' }}
+      >
         <div
           className="nav-item nav-about"
           onMouseEnter={() => setAboutOpen(true)}
@@ -31,6 +45,16 @@ const TopBar = () => {
         <a href="#">Recruit</a>
         <a href="#">Contact</a>
       </nav>
+      {isMobile && (
+        <div
+          className={`hamburger${mobileNavOpen ? ' open' : ''}`}
+          onClick={() => setMobileNavOpen(!mobileNavOpen)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      )}
     </header>
   );
 };

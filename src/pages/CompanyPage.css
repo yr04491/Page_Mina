@@ -1,3 +1,9 @@
+:root {
+  --nav-padding-right: 24px;   /* 右端からnav_barまでの距離 */
+  --nav-padding-left: 48px;    /* 左端からロゴまでの距離 */
+  --logo-nav-gap: 0px;         /* ロゴとnav_barの間隔（space-betweenなので通常0） */
+}
+
 .company-page {
   max-width: 900px;
   margin: 0 auto;
@@ -72,8 +78,8 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 32px 24px 0 48px;
+  justify-content: space-between;
+  padding: 32px var(--nav-padding-right) 0 var(--nav-padding-left);
   background: #fff;
   position: fixed;
   top: 0;
@@ -87,11 +93,13 @@
   color: #222;
   letter-spacing: 1px;
   font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
-  margin-right: 48px;
+  margin-right: var(--logo-nav-gap);
 }
 .nav-menu {
   display: flex;
   gap: 28px;
+  position: relative;
+  left: -100px;
 }
 .nav-menu a {
   color: #333;
@@ -155,4 +163,80 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .nav-menu {
+    display: flex;
+    position: relative; 
+    top: 80px;
+    right: 0;
+    left: 0;
+    background: #fff;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0 !important;
+    padding: 32px 32px 32px 0;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    z-index: 3000;
+    left: 0 !important;
+  }
+  .nav-menu.open {
+    display: flex !important;
+    animation: fadeIn 0.2s;
+  }
+  .nav-menu > * {
+    margin-bottom: 18px;
+  }
+  .hamburger {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    background: #222;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 4000;
+    margin-left: 16px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 4px;
+    background: #fff;
+    margin: 4px 0;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+  .hamburger.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+@media (min-width: 901px) {
+  .hamburger {
+    display: none !important;
+  }
+  .nav-menu {
+    display: flex !important;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    left: -100px;
+    gap: 28px;
+  }
 } 
