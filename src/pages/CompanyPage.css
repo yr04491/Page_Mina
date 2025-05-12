@@ -167,8 +167,8 @@
 
 @media (max-width: 900px) {
   .nav-menu {
-    display: flex;
-    position: relative; 
+    display: none;
+    position: fixed;
     top: 80px;
     right: 0;
     left: 0;
@@ -239,4 +239,139 @@
     left: -100px;
     gap: 28px;
   }
+}
+
+.mission-section, .vision-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 0 8px #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
+  margin: 32px auto;
+  padding: 32px 32px 32px 64px;
+  max-width: 800px;
+  position: relative;
+}
+.mission-section::before, .vision-section::before {
+  content: attr(data-label);
+  position: absolute;
+  left: -48px;
+  top: 32px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4b5563;
+  background: #e5e7eb;
+  border-radius: 8px;
+  padding: 4px 24px 4px 12px;
+  writing-mode: horizontal-tb;
+  letter-spacing: 1px;
+}
+.mission-section::before {
+  content: 'Mission';
+}
+.vision-section::before {
+  content: 'Vision';
+}
+.mission-section h2, .vision-section h2 {
+  display: none;
+}
+.mission-section h3, .vision-section h3 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.mission-section p.main, .vision-section p.main {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  text-align: center;
+  margin-bottom: 16px;
+}
+.mission-section p, .vision-section p {
+  font-size: 1.1rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.officers-section {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 0 8px #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
+  margin: 32px auto;
+  padding: 32px 32px 32px 64px;
+  max-width: 800px;
+  position: relative;
+  min-height: 220px;
+}
+.officers-section::before {
+  content: '会社役員';
+  position: absolute;
+  left: -48px;
+  top: 32px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4b5563;
+  background: #e5e7eb;
+  border-radius: 8px;
+  padding: 4px 24px 4px 12px;
+  writing-mode: horizontal-tb;
+  letter-spacing: 1px;
+}
+.officers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-end;
+  margin-top: 32px;
+}
+.officer-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  min-width: 320px;
+  max-width: 700px;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 auto;
+}
+.officer-photo {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 32px;
+  border: 2px solid #e5e7eb;
+}
+.officer-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: 8px;
+}
+.officer-role {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+.officer-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 2px;
+  display: block;
+}
+.officer-title {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 8px;
+}
+.officer-message {
+  font-size: 1.05rem;
+  color: #222;
+  margin-top: 8px;
+  line-height: 1.7;
+  text-align: left;
+  flex: 1;
 } 

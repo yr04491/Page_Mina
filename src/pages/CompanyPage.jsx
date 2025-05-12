@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './CompanyPage.css';
 
-const TopBar = () => {
+const TopBar = ({ scrollToSection }) => {
   const [aboutOpen, setAboutOpen] = useState(false);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
@@ -14,6 +14,14 @@ const TopBar = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleDropdownClick = (section) => {
+    setAboutOpen(false);
+    if (isMobile) setMobileNavOpen(false);
+    requestAnimationFrame(() => {
+      scrollToSection(section);
+    });
+  };
 
   return (
     <header className="topbar">
@@ -32,11 +40,11 @@ const TopBar = () => {
           </a>
           {aboutOpen && (
             <div className="dropdown-menu">
-              <a href="#">Mission</a>
-              <a href="#">Vision</a>
-              <a href="#">会社紹介</a>
-              <a href="#">会社概要</a>
-              <a href="#">会社役員</a>
+              <a href="#" onClick={() => handleDropdownClick('mission')}>Mission</a>
+              <a href="#" onClick={() => handleDropdownClick('vision')}>Vision</a>
+              <a href="#" onClick={() => handleDropdownClick('about-company')}>会社紹介</a>
+              <a href="#" onClick={() => handleDropdownClick('company-info')}>会社概要</a>
+              <a href="#" onClick={() => handleDropdownClick('officers')}>会社役員</a>
             </div>
           )}
         </div>
@@ -60,18 +68,66 @@ const TopBar = () => {
 };
 
 const CompanyPage = () => {
+  const missionRef = useRef(null);
+  const visionRef = useRef(null);
+  const aboutCompanyRef = useRef(null);
+  const companyInfoRef = useRef(null);
+  const officersRef = useRef(null);
+
+  const scrollToSection = (section) => {
+    const refs = {
+      mission: missionRef,
+      vision: visionRef,
+      'about-company': aboutCompanyRef,
+      'company-info': companyInfoRef,
+      officers: officersRef,
+    };
+    const ref = refs[section];
+    if (ref && ref.current) {
+      const header = document.querySelector('.topbar');
+      const headerHeight = header ? header.offsetHeight : 0;
+      const rect = ref.current.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const top = rect.top + scrollTop - headerHeight - 8;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="company-page">
-      <TopBar />
+      <TopBar scrollToSection={scrollToSection} />
       {/* ヒーローセクション */}
       <section className="hero">
         <img src="https://placehold.jp/1200x400.png" alt="会社イメージ" className="hero-image" />
-        <h1>株式会社ダミー</h1>
-        <p>「つながりで世界をもっと楽しく」</p>
+        <h1>株式会社Minakano</h1>
+        <p>「みんなの可能性を広げる」</p>
       </section>
-
-      {/* 会社概要 */}
-      <section className="company-info">
+      {/* Missionセクション */}
+      <section ref={missionRef} className="mission-section">
+        <h2>Mission</h2>
+        <h3>みんなの可能性を広げる</h3>
+        <p>私たちは、「誰⼀⼈取り残さない学び」を実現するために、</p>
+        <p>すべての⼦どもたちが⾃分らしい成⻑を遂げられる環境づくりに取り組んでいます。</p>
+        <p>学びに困難を感じている⼦ども、教室に居場所を⾒つけられない⼦どもにも、可能性は等しくあります。</p>
+        <p>その可能性に気づき、伸ばすための"きっかけ"を届けることが、私たちの使命です。</p>
+      </section>
+      {/* Visionセクション */}
+      <section ref={visionRef} className="vision-section">
+        <h2>Vision</h2>
+        <h3>生成AIを用いた個別最適な学びの実現</h3>
+        <p>私たちは、高専在学中に生成AIの革新性に出会い、その未来に強く魅了されました。</p>
+        <p>「すべての子どもがAIとともに学ぶ時代」を見据え、</p>
+        <p>生成AIを使った学習支援を通して、個々に最適化された"自分だけの学び"を提供します。</p>
+        <p>子どもたちがAIを使いこなす力を自然と身につけ、自分らしい未来を切り拓くことができる社会</p>
+        <p>それが、私たちが目指すビジョンです。</p>
+      </section>
+      {/* 会社紹介セクション */}
+      <section ref={aboutCompanyRef} className="about-company-section">
+        <h2>会社紹介</h2>
+        <p>Minakanoは、ITサービスとコンサルティングを中心に、さまざまな分野で事業を展開しています。お客様の課題解決と成長をサポートするパートナーです。</p>
+      </section>
+      {/* 会社概要セクション */}
+      <section ref={companyInfoRef} className="company-info">
         <h2>会社概要</h2>
         <table>
           <tbody>
@@ -84,7 +140,52 @@ const CompanyPage = () => {
           </tbody>
         </table>
       </section>
-
+      {/* 会社役員セクション */}
+      <section ref={officersRef} className="officers-section">
+        <div className="officers-list">
+          <div className="officer-card">
+            <div>
+              <img className="officer-photo" src="/images/CEO.png" alt="田濃 一翔" />
+              <div className="officer-info">
+                <div className="officer-name">田濃 一翔</div>
+                <div className="officer-role">代表取締役CEO</div>
+                <div className="officer-title">福井大学大学院 工学研究科 在学</div>
+              </div>
+            </div>
+            <div className="officer-message">
+              私たちは、すべての⼦どもたちが「<b>⾃分に合った学び</b>」に出会える社会を⽬指しています。<br />
+              ⾼専での学びの中で<b>⽣成AI</b>と出会った私たちは、その可能性に⼤きな希望を感じました。<br />
+              これからの時代、⽣成AIを「<b>使いこなす⼒</b>」は読み書きと同じくらい重要なスキルになると確信しています。<br />
+              だからこそ、⼦どもたちが早い段階からAIと⾃然に関わり、<br />
+              ⾃分の学びを<b>⾃分で広げていける</b>環境が必要です。<br />
+              私たちは、⽣成AIを活⽤した学習⽀援を通じて、誰もが⾃分らしく学び、<br />
+              可能性を伸ばせる未来への"<b>架け橋</b>"となることを⽬指します。
+            </div>
+          </div>
+          <div className="officer-card">
+            <div>
+              <img className="officer-photo" src="/images/CMO.png" alt="青木 愛一郎" />
+              <div className="officer-info">
+                <div className="officer-name">青木 愛一郎</div>
+                <div className="officer-role">取締役CMO</div>
+                <div className="officer-title">福井大学 教育学部 在学</div>
+              </div>
+            </div>
+            <div className="officer-message">
+              私たちは、教育の現場で⼦どもたち<b>⼀⼈ひとり</b>と向き合う中で、<br />
+              「学びにつまずいた⼦どもが、必要な⽀援を受けられずに取り残されている」という厳しい<b>現実</b>に直⾯しました。<br />
+              教育現場での経験を通じて、そうした⼦どもたちのまなざしに出会い、私たちは深く⼼を動かされました。<br />
+              その経験が、私たちの<b>出発点</b>です。<br />
+              誰もが⾃分のペースで、⾃分らしく学べること。<br />
+              そして、困難を抱える⼦どもも、安⼼して学びに向かえること。<br />
+              そんな「<b>誰⼀⼈取り残さない</b>」個別最適な学びの実現と、包摂的な教育環境の構築を⽬指して、<br />
+              私たちはAIと⼈の⼒を融合させた新しい<b>教育のかたち</b>をつくっています。<br />
+              学ぶことが「できる・できない」ではなく、「楽しい・わかる・つながる」未来へ。<br />
+              私たちは、すべての⼦どもの<b>可能性を広げ</b>、その⼀歩を⽀え続けます。
+            </div>
+          </div>
+        </div>
+      </section>
       {/* 沿革 */}
       <section className="history">
         <h2>沿革</h2>
@@ -94,7 +195,6 @@ const CompanyPage = () => {
           <li>2022年7月　本社を渋谷区に移転</li>
         </ul>
       </section>
-
       {/* 代表挨拶 */}
       <section className="message">
         <h2>代表挨拶</h2>
@@ -104,7 +204,6 @@ const CompanyPage = () => {
         </p>
         <p className="ceo">代表取締役　山田 太郎</p>
       </section>
-
       {/* ビジョン・ミッション */}
       <section className="vision-mission">
         <h2>ビジョン・ミッション</h2>
