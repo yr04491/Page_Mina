@@ -360,7 +360,7 @@
 .officers-section::before { content: '会社役員'; }
 .history::before { content: '沿革'; }
 
-.officers-section::after, .history::after {
+/*.officers-section::after, .history::after {
   content: '';
   display: block;
   position: absolute;
@@ -371,7 +371,7 @@
   background: #7ec3f5;
   border-radius: 3px;
   z-index: 2;
-}
+}*/
 
 .history h2 {
   display: none;
@@ -380,33 +380,35 @@
   padding-left: 20px;
   font-size: 1.1rem;
   color: #222;
-  margin-top: 0;
+  margin-top: 48px;
 }
-
 .card-label, .company-info-label {
   display: inline-block;
   font-size: 2rem;
   font-weight: bold;
   color: #222;
   background: #e5e7eb;
-  border-radius: 12px 12px 12px 12px;
-  padding: 4px 32px 4px 20px;
+  border-radius: 12px;
+  padding: 8px 24px; /* 左右のパディングを均等に */
   margin-bottom: 0;
   position: absolute;
   left: -48px;
   top: 32px;
   z-index: 2;
   box-shadow: none;
+  text-align: center; /* テキストを中央揃え */
+  white-space: nowrap; /* テキストを折り返さない */
 }
+
 .card-label::after, .company-info-label::after {
   content: '';
   display: block;
-  width: 120px;
+  width: 100%; /* テキストの幅に合わせて自動調整 */
   height: 6px;
   background: #7ec3f5;
   border-radius: 3px;
-  margin-top: 4px;
-  margin-left: -4px;
+  margin-top: 8px;
+  margin-left: 0; /* 左マージンをリセット */
 }
 .about-company-section::before, .about-company-section::after,
 .company-info::before, .company-info::after {
