@@ -123,12 +123,17 @@ const CompanyPage = () => {
       </section>
       {/* 会社紹介セクション */}
       <section ref={aboutCompanyRef} className="about-company-section">
-        <h2>会社紹介</h2>
-        <p>Minakanoは、ITサービスとコンサルティングを中心に、さまざまな分野で事業を展開しています。お客様の課題解決と成長をサポートするパートナーです。</p>
+        <span className="card-label">会社紹介</span>
+        <p>株式会社ミナカノは、<b>福井大学</b>の学生によって設立された、次世代の教育を切り拓く<b>スタートアップ企業</b>です。</p>
+        <p>私たちは「<b>みんなの可能性を広げる</b>」をミッションに掲げ、不登校や学習困難といった課題に直面する子どもたち一人ひとりに寄り添いながら、自己肯定感と学力の向上を支援する革新的な教育システムを<b>開発・提供</b>しています。</p>
+        <p>現代社会において、子どもたちが直面する学びの課題は多様化しています。私たちは、学校という枠組みだけでは十分にカバーできないニーズに応え、「<b>どこにいても、誰でも、自分らしく学べる</b>」環境をつくることを目指しています。</p>
+        <p>そのために、<b>AI</b>やICTの技術を積極的に活用し、個々の学習スタイルやペースに合わせた最適なサポートを実現。子どもたちが自信を持って一歩を踏み出せるよう、自己発見と成長を促すプログラムを提供しています。</p>
+        <p>また、私たちミナカノの強みは、現役大学生ならではの柔軟な発想力と行動力にあります。<b>社会課題</b>に真正面から向き合い、教育現場のリアルな声を取り入れながら、日々サービスの改良と<b>新しい挑戦</b>を続けています。</p>
+        <p>これからも私たちは、すべての子どもたちの「<b>可能性</b>」に光を当てるために、仲間とともに成長し続け、<b>教育の未来</b>を切り拓いていきます。</p>
       </section>
       {/* 会社概要セクション */}
       <section ref={companyInfoRef} className="company-info">
-        <h2>会社概要</h2>
+        <span className="company-info-label">会社概要</span>
         <table>
           <tbody>
             <tr><th>会社名</th><td>株式会社ダミー</td></tr>
@@ -149,7 +154,8 @@ const CompanyPage = () => {
               <div className="officer-info">
                 <div className="officer-name">田濃 一翔</div>
                 <div className="officer-role">代表取締役CEO</div>
-                <div className="officer-title">福井大学大学院 工学研究科 在学</div>
+                <div className="officer-title">福井大学大学院</div>
+                <div className="officer-title">工学研究科 在学</div>
               </div>
             </div>
             <div className="officer-message">
@@ -168,7 +174,8 @@ const CompanyPage = () => {
               <div className="officer-info">
                 <div className="officer-name">青木 愛一郎</div>
                 <div className="officer-role">取締役CMO</div>
-                <div className="officer-title">福井大学 教育学部 在学</div>
+                <div className="officer-title">福井大学</div>
+                <div className="officer-title">教育学部 在学</div>
               </div>
             </div>
             <div className="officer-message">
@@ -188,29 +195,12 @@ const CompanyPage = () => {
       </section>
       {/* 沿革 */}
       <section className="history">
-        <h2>沿革</h2>
+        <span className="card-label">沿革</span>
         <ul>
           <li>2020年1月　株式会社ダミー設立</li>
           <li>2021年4月　新サービス「Dummy Connect」リリース</li>
           <li>2022年7月　本社を渋谷区に移転</li>
         </ul>
-      </section>
-      {/* 代表挨拶 */}
-      <section className="message">
-        <h2>代表挨拶</h2>
-        <p>
-          私たちは「つながりで世界をもっと楽しく」をミッションに掲げ、
-          新しい価値を創造し続けます。今後ともご支援のほどよろしくお願いいたします。
-        </p>
-        <p className="ceo">代表取締役　山田 太郎</p>
-      </section>
-      {/* ビジョン・ミッション */}
-      <section className="vision-mission">
-        <h2>ビジョン・ミッション</h2>
-        <p>
-          ビジョン：人と人、人と社会をつなぐプラットフォームを創る<br />
-          ミッション：テクノロジーで新しい「つながり」を生み出す
-        </p>
       </section>
     </div>
   );
