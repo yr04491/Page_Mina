@@ -15,13 +15,13 @@ const TopBar = ({ scrollToSection }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
- const handleDropdownClick = (section) => {
-  setAboutOpen(false);
-  if (isMobile) setMobileNavOpen(false);
-  requestAnimationFrame(() => {
-    scrollToSection(section);
-  });
-};
+  const handleDropdownClick = (section) => {
+    setAboutOpen(false);
+    if (isMobile) setMobileNavOpen(false);
+    requestAnimationFrame(() => {
+      scrollToSection(section);
+    });
+  };
 
   return (
     <header className="topbar">
@@ -75,32 +75,51 @@ const CompanyPage = () => {
   const companyInfoRef = useRef(null);
   const officersRef = useRef(null);
   const historyRef = useRef(null);
-
+  /**
+   * 指定されたセクションへスクロールするための関数
+   * @param {string} section - スクロール先のセクション名（'mission', 'vision'など）
+   */
   const scrollToSection = (section) => {
+    // セクション名と対応するrefのマッピングオブジェクト
+    // 各refはuseRefフックで作成されたセクション要素への参照
     const refs = {
-      mission: missionRef,
-      vision: visionRef,
-      'about-company': aboutCompanyRef,
-      'company-info': companyInfoRef,
-      officers: officersRef,
-      history: historyRef,
+      mission: missionRef,           // Missionセクションへの参照
+      vision: visionRef,             // Visionセクションへの参照
+      'about-company': aboutCompanyRef, // 会社紹介セクションへの参照
+      'company-info': companyInfoRef,   // 会社概要セクションへの参照
+      officers: officersRef,         // 会社役員セクションへの参照
+      history: historyRef,           // 沿革セクションへの参照
     };
+
+    // 指定されたセクション名に対応するrefを取得
     const ref = refs[section];
+
+    // refが存在し、かつそれが実際のDOM要素を参照している場合のみ処理を実行
     if (ref && ref.current) {
+      // ヘッダー要素を取得
       const header = document.querySelector('.topbar');
+
+      // ヘッダーの高さを取得（存在しない場合は0）
+      // スクロール後にセクションがヘッダーの下に表示されるために必要
       const headerHeight = header ? header.offsetHeight : 0;
-      
-      // スクロールするターゲット要素の位置を取得
+
+      // 現在のビューポートからターゲット要素までの垂直距離を取得
+      // getBoundingClientRect().topは要素の上端がビューポートの上端からどれだけ離れているかを返す
+      // これは現在のスクロール位置に依存する相対値
       const targetPosition = ref.current.getBoundingClientRect().top;
-      
-      // 現在の表示位置からの相対的な距離を計算
-      // ヘッダーの高さを考慮して少し余裕を持たせる
+
+      // スクロールすべき距離を計算
+      // ターゲット位置からヘッダーの高さを引き、さらに余白として8px追加
+      // これにより、スクロール後にセクションがヘッダーの下に適切な余白を持って表示される
       const offset = targetPosition - headerHeight - 8;
-      
-      // window.scrollByを使って相対的にスクロール
+
+      // window.scrollByメソッドを使用して現在位置から相対的にスクロール
+      // scrollByは現在のスクロール位置を基準に移動する
+      // top: offsetは垂直方向の移動量（ピクセル）
+      // behavior: 'smooth'はスムーズなアニメーションスクロールを有効化
       window.scrollBy({
-        top: offset,
-        behavior: 'smooth'
+        top: offset,      // 計算された垂直方向の移動量
+        behavior: 'smooth' // スムーズスクロールを有効化
       });
     }
   };
@@ -205,6 +224,23 @@ const CompanyPage = () => {
               私たちはAIと⼈の⼒を融合させた新しい<b>教育のかたち</b>をつくっています。<br />
               学ぶことが「できる・できない」ではなく、「楽しい・わかる・つながる」未来へ。<br />
               私たちは、すべての⼦どもの<b>可能性を広げ</b>、その⼀歩を⽀え続けます。
+            </div>
+          </div>
+          <div className="officer-card">
+            <div>
+              <img className="officer-photo" src="/images/COO.png" alt="安倍 誠明" />
+              <div className="officer-info">
+                <div className="officer-name">安倍 誠明</div>
+                <div className="officer-role">取締役COO</div>
+                <div className="officer-title">福井大学大学院</div>
+                <div className="officer-title">工学研究科博士前期課程 </div>
+                <div className="officer-title">産業創成工学専攻 </div>
+                <div className="officer-title">経営技術革新情報工学コース </div>
+                <div className="officer-title">経営技術革新情報工学研究室 </div>
+              </div>
+            </div>
+            <div className="officer-message">
+              やるぞー！！
             </div>
           </div>
         </div>
