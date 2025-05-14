@@ -24,6 +24,42 @@
   margin-bottom: 16px;
 }
 
+/* 共通のセクションラベルスタイル */
+.section-label {
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+  background: #e5e7eb;
+  border-radius: 12px;
+  padding: 8px 24px; /* 左右のパディングを均等に */
+  margin-bottom: 0;
+  position: absolute;
+  left: -48px;
+  top: 32px;
+  z-index: 2;
+  box-shadow: none;
+  text-align: center; /* テキストを中央揃え */
+  white-space: nowrap; /* テキストを折り返さない */
+}
+
+/* セクションラベルの青いバー */
+.section-label::after {
+  content: '';
+  display: block;
+  width: 100%; /* テキストの幅に合わせて自動調整 */
+  height: 6px;
+  background: #7ec3f5;
+  border-radius: 3px;
+  margin-top: 8px;
+  margin-left: 0; /* 左マージンをリセット */
+}
+
+/* 既存のカードラベルクラスを新しい共通クラスに継承させる */
+.card-label, .company-info-label {
+  composes: section-label;
+}
+
 .company-info {
   background: #fff;
   border-radius: 16px;
@@ -33,21 +69,7 @@
   max-width: 900px;
   position: relative;
 }
-.company-info::before {
-  content: attr(data-label);
-  position: absolute;
-  left: -48px;
-  top: 32px;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #222;
-  background: #e5e7eb;
-  border-radius: 8px;
-  padding: 4px 24px 4px 12px;
-  writing-mode: horizontal-tb;
-  letter-spacing: 1px;
-  z-index: 2;
-}
+
 .company-info h2 {
   display: none;
 }
@@ -73,6 +95,9 @@
 }
 .history ul {
   padding-left: 20px;
+  font-size: 1.1rem;
+  color: #222;
+  margin-top: 48px; /* 上部マージンを増やして重なりを解消 */
 }
 
 .message {
@@ -264,32 +289,30 @@
   }
 }
 
-.mission-section, .vision-section {
+/* 共通のセクションスタイル */
+.mission-section, .vision-section, .about-company-section, 
+.company-info, .officers-section, .history {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 0 0 8px #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
   margin: 32px auto;
   padding: 32px 32px 32px 64px;
-  max-width: 800px;
+  max-width: 900px;
   position: relative;
 }
-.mission-section::before, .vision-section::before {
-  content: attr(data-label);
-  position: absolute;
-  left: -48px;
-  top: 32px;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #222;
-  background: #e5e7eb;
-  border-radius: 8px;
-  padding: 4px 24px 4px 12px;
-  writing-mode: horizontal-tb;
-  letter-spacing: 1px;
-  z-index: 2;
+
+/* 特定のセクションにはパディングを追加 */
+.mission-section, .vision-section {
+  padding-left: 96px !important;
 }
-.mission-section::before { content: 'Mission'; }
-.vision-section::before { content: 'Vision'; }
+
+/* 特定のセクションにはパディングを追加 */
+.officers-section, .company-info, .about-company-section, .history {
+  padding-left: 96px !important;
+  padding-top: 80px !important;
+}
+
+/* Mission/Visionセクションのスタイル */
 .mission-section h2, .vision-section h2 {
   display: none;
 }
@@ -314,116 +337,70 @@
   margin-bottom: 8px;
 }
 
-/* 青いバー */
-.mission-section::after, .vision-section::after, .about-company-section::after, .company-info::after, .officers-section::after {
-  content: '';
-  position: absolute;
-  left: -48px;
-  top: 76px;
-  width: 120px;
-  height: 6px;
-  background: #7ec3f5;
-  border-radius: 3px;
-  z-index: 2;
-}
-
-.mission-section, .vision-section {
-  padding-left: 96px !important;
-}
-
-.officers-section, .company-info, .about-company-section, .history {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 0 0 8px #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
-  margin: 32px auto;
-  padding-left: 96px !important;
-  padding-top: 80px !important;
-  max-width: 900px;
-  position: relative;
-}
-
+/* セクションラベルの代わりに::before擬似要素を使用 - 非推奨 */
+/* 
+.mission-section::before, .vision-section::before,
 .officers-section::before, .history::before {
-  display: inline-block;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #222;
-  background: #e5e7eb;
-  border-radius: 12px 12px 12px 12px;
-  padding: 4px 32px 4px 20px;
-  margin-bottom: 0;
-  position: absolute;
-  left: -48px;
-  top: 32px;
-  z-index: 2;
-  box-shadow: none;
-}
-.officers-section::before { content: '会社役員'; }
-.history::before { content: '沿革'; }
-
-/*.officers-section::after, .history::after {
-  content: '';
-  display: block;
-  position: absolute;
-  left: -48px;
-  top: 76px;
-  width: 120px;
-  height: 6px;
-  background: #7ec3f5;
-  border-radius: 3px;
-  z-index: 2;
-}*/
-
-.history h2 {
-  display: none;
-}
-.history ul {
-  padding-left: 20px;
-  font-size: 1.1rem;
-  color: #222;
-  margin-top: 48px;
-}
-.card-label, .company-info-label {
+  content: attr(data-label);
   display: inline-block;
   font-size: 2rem;
   font-weight: bold;
   color: #222;
   background: #e5e7eb;
   border-radius: 12px;
-  padding: 8px 24px; /* 左右のパディングを均等に */
-  margin-bottom: 0;
+  padding: 8px 24px;
   position: absolute;
   left: -48px;
   top: 32px;
   z-index: 2;
-  box-shadow: none;
-  text-align: center; /* テキストを中央揃え */
-  white-space: nowrap; /* テキストを折り返さない */
+  text-align: center;
+  white-space: nowrap;
 }
+*/
 
-.card-label::after, .company-info-label::after {
+/* 各セクションのラベル内容を指定 - 非推奨 */
+/*
+.mission-section::before { content: 'Mission'; }
+.vision-section::before { content: 'Vision'; }
+.officers-section::before { content: '会社役員'; }
+.history::before { content: '沿革'; }
+*/
+
+/* 青いバーを追加 - 非推奨 */
+/*
+.mission-section::before::after, .vision-section::before::after,
+.officers-section::before::after, .history::before::after {
   content: '';
   display: block;
-  width: 100%; /* テキストの幅に合わせて自動調整 */
+  width: 100%;
   height: 6px;
   background: #7ec3f5;
   border-radius: 3px;
   margin-top: 8px;
-  margin-left: 0; /* 左マージンをリセット */
+  position: absolute;
+  bottom: -8px;
+  left: 0;
 }
-.about-company-section::before, .about-company-section::after,
-.company-info::before, .company-info::after {
-  display: none !important;
+*/
+
+/* 既存の青いバー定義を上書き（非表示化はせず、必要に応じて修正） */
+.mission-section::after, .vision-section::after, 
+.about-company-section::after, .company-info::after, 
+.officers-section::after, .history::after {
+  content: '';
+  position: absolute;
+  left: -48px;
+  bottom: auto;
+  top: 76px;
+  width: 100%; /* ラベルに合わせて幅を調整 */
+  height: 6px;
+  background: #7ec3f5;
+  border-radius: 3px;
+  z-index: 2;
+  display: none; /* 古いバーは非表示に */
 }
 
 .officers-section {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 0 0 8px #e5e7eb, 0 2px 8px rgba(0,0,0,0.04);
-  margin: 32px auto;
-  padding-left: 96px !important;
-  padding-top: 80px !important;
-  max-width: 900px;
-  position: relative;
   min-height: 220px;
 }
 .officers-list {
@@ -476,15 +453,13 @@
   text-align: center;
   width: 100%;
 }
-/* 役員の肩書き（例：所属や学部など）のスタイル */
 .officer-title {
-  font-size: 0.95rem; /* 文字サイズ（親要素の約95%の大きさ、やや小さめ） */
+  font-size: 0.95rem;
   color: #555;
-  margin-bottom: 8px; /* 下に8pxの余白（次の要素との間隔） */
+  margin-bottom: 8px;
   text-align: center;
   width: 100%;
 }
-/* .officer-title ここまで */
 .officer-message {
   font-size: 1.05rem;
   color: #222;
@@ -492,4 +467,4 @@
   line-height: 1.7;
   text-align: left;
   flex: 1;
-} 
+}

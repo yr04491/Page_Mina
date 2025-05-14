@@ -25,7 +25,7 @@ const TopBar = ({ scrollToSection }) => {
 
   return (
     <header className="topbar">
-      <div className="logo">Minakano</div>
+      <div className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ cursor: 'pointer' }}>Minakano</div>
       <nav
         className={`nav-menu${isMobile && mobileNavOpen ? ' open' : ''}`}
         style={isMobile ? {} : { display: 'flex' }}
@@ -45,6 +45,7 @@ const TopBar = ({ scrollToSection }) => {
               <a href="#" onClick={() => handleDropdownClick('about-company')}>会社紹介</a>
               <a href="#" onClick={() => handleDropdownClick('company-info')}>会社概要</a>
               <a href="#" onClick={() => handleDropdownClick('officers')}>会社役員</a>
+              <a href="#" onClick={() => handleDropdownClick('history')}>沿革</a>
             </div>
           )}
         </div>
@@ -73,6 +74,7 @@ const CompanyPage = () => {
   const aboutCompanyRef = useRef(null);
   const companyInfoRef = useRef(null);
   const officersRef = useRef(null);
+  const historyRef = useRef(null);
 
   const scrollToSection = (section) => {
     const refs = {
@@ -81,6 +83,7 @@ const CompanyPage = () => {
       'about-company': aboutCompanyRef,
       'company-info': companyInfoRef,
       officers: officersRef,
+      history: historyRef,
     };
     const ref = refs[section];
     if (ref && ref.current) {
@@ -104,6 +107,7 @@ const CompanyPage = () => {
       </section>
       {/* Missionセクション */}
       <section ref={missionRef} className="mission-section">
+        <span className="section-label">Mission</span>
         <h2>Mission</h2>
         <h3>みんなの可能性を広げる</h3>
         <p>私たちは、「誰⼀⼈取り残さない学び」を実現するために、</p>
@@ -113,6 +117,7 @@ const CompanyPage = () => {
       </section>
       {/* Visionセクション */}
       <section ref={visionRef} className="vision-section">
+        <span className="section-label">Vision</span>
         <h2>Vision</h2>
         <h3>生成AIを用いた個別最適な学びの実現</h3>
         <p>私たちは、高専在学中に生成AIの革新性に出会い、その未来に強く魅了されました。</p>
@@ -123,7 +128,8 @@ const CompanyPage = () => {
       </section>
       {/* 会社紹介セクション */}
       <section ref={aboutCompanyRef} className="about-company-section">
-        <span className="card-label">会社紹介</span>
+        <span className="section-label card-label">会社紹介</span>
+        <h3>みんなの可能性を広げる</h3>
         <p>株式会社ミナカノは、<b>福井大学</b>の学生によって設立された、次世代の教育を切り拓く<b>スタートアップ企業</b>です。</p>
         <p>私たちは「<b>みんなの可能性を広げる</b>」をミッションに掲げ、不登校や学習困難といった課題に直面する子どもたち一人ひとりに寄り添いながら、自己肯定感と学力の向上を支援する革新的な教育システムを<b>開発・提供</b>しています。</p>
         <p>現代社会において、子どもたちが直面する学びの課題は多様化しています。私たちは、学校という枠組みだけでは十分にカバーできないニーズに応え、「<b>どこにいても、誰でも、自分らしく学べる</b>」環境をつくることを目指しています。</p>
@@ -133,7 +139,7 @@ const CompanyPage = () => {
       </section>
       {/* 会社概要セクション */}
       <section ref={companyInfoRef} className="company-info">
-        <span className="company-info-label">会社概要</span>
+        <span className="section-label company-info-label">会社概要</span>
         <table>
           <tbody>
             <tr><th>会社名</th><td>株式会社ダミー</td></tr>
@@ -147,6 +153,7 @@ const CompanyPage = () => {
       </section>
       {/* 会社役員セクション */}
       <section ref={officersRef} className="officers-section">
+        <span className="section-label">会社役員</span>
         <div className="officers-list">
           <div className="officer-card">
             <div>
@@ -194,8 +201,8 @@ const CompanyPage = () => {
         </div>
       </section>
       {/* 沿革 */}
-      <section className="history">
-        <span className="card-label">沿革</span>
+      <section ref={historyRef} className="history">
+        <span className="section-label card-label">沿革</span>
         <ul>
           <li>2020年1月　株式会社ダミー設立</li>
           <li>2021年4月　新サービス「Dummy Connect」リリース</li>
@@ -206,4 +213,4 @@ const CompanyPage = () => {
   );
 };
 
-export default CompanyPage; 
+export default CompanyPage;
