@@ -75,13 +75,13 @@ const CompanyPage = () => {
   const companyInfoRef = useRef(null);
   const officersRef = useRef(null);
   const historyRef = useRef(null);
+
   /**
    * 指定されたセクションへスクロールするための関数
    * @param {string} section - スクロール先のセクション名（'mission', 'vision'など）
    */
   const scrollToSection = (section) => {
     // セクション名と対応するrefのマッピングオブジェクト
-    // 各refはuseRefフックで作成されたセクション要素への参照
     const refs = {
       mission: missionRef,           // Missionセクションへの参照
       vision: visionRef,             // Visionセクションへの参照
@@ -90,38 +90,43 @@ const CompanyPage = () => {
       officers: officersRef,         // 会社役員セクションへの参照
       history: historyRef,           // 沿革セクションへの参照
     };
-
+    
     // 指定されたセクション名に対応するrefを取得
     const ref = refs[section];
-
+    
     // refが存在し、かつそれが実際のDOM要素を参照している場合のみ処理を実行
     if (ref && ref.current) {
       // ヘッダー要素を取得
       const header = document.querySelector('.topbar');
-
+      
       // ヘッダーの高さを取得（存在しない場合は0）
-      // スクロール後にセクションがヘッダーの下に表示されるために必要
       const headerHeight = header ? header.offsetHeight : 0;
-
+      
       // 現在のビューポートからターゲット要素までの垂直距離を取得
       // getBoundingClientRect().topは要素の上端がビューポートの上端からどれだけ離れているかを返す
-      // これは現在のスクロール位置に依存する相対値
       const targetPosition = ref.current.getBoundingClientRect().top;
-
+      
       // スクロールすべき距離を計算
       // ターゲット位置からヘッダーの高さを引き、さらに余白として8px追加
-      // これにより、スクロール後にセクションがヘッダーの下に適切な余白を持って表示される
       const offset = targetPosition - headerHeight - 8;
-
+      
       // window.scrollByメソッドを使用して現在位置から相対的にスクロール
       // scrollByは現在のスクロール位置を基準に移動する
       // top: offsetは垂直方向の移動量（ピクセル）
       // behavior: 'smooth'はスムーズなアニメーションスクロールを有効化
       window.scrollBy({
-        top: offset,      // 計算された垂直方向の移動量
-        behavior: 'smooth' // スムーズスクロールを有効化
+        top: offset,
+        behavior: 'smooth'
       });
     }
+  };
+
+  // GitHub Pagesでのベースパスを取得
+  const getBasePath = () => {
+    // 本番環境ではprocess.env.PUBLIC_URLを使用、ローカル開発では空文字列を返す
+    return process.env.NODE_ENV === 'production' 
+      ? '/Page_Mina' // GitHubリポジトリ名に合わせる
+      : '';
   };
 
   return (
@@ -185,8 +190,8 @@ const CompanyPage = () => {
         <div className="officers-list">
           <div className="officer-card">
             <div>
-              <img className="officer-photo" src="/images/CEO.png" alt="田濃 一翔" />
-              <div className="officer-info">
+            <img className="officer-photo" src="/images/CEO.png" alt="田濃 一翔" />
+            <div className="officer-info">
                 <div className="officer-name">田濃 一翔</div>
                 <div className="officer-role">代表取締役CEO</div>
                 <div className="officer-title">福井大学大学院</div>
@@ -205,7 +210,7 @@ const CompanyPage = () => {
           </div>
           <div className="officer-card">
             <div>
-              <img className="officer-photo" src="/images/CMO.png" alt="青木 愛一郎" />
+              <img className="officer-photo" src={`${getBasePath()}/images/CMO.png`} alt="青木 愛一郎" />
               <div className="officer-info">
                 <div className="officer-name">青木 愛一郎</div>
                 <div className="officer-role">取締役CMO</div>
@@ -228,7 +233,7 @@ const CompanyPage = () => {
           </div>
           <div className="officer-card">
             <div>
-              <img className="officer-photo" src="/images/COO.png" alt="安倍 誠明" />
+              <img className="officer-photo" src={`${getBasePath()}/images/COO.png`} alt="安倍 誠明" />
               <div className="officer-info">
                 <div className="officer-name">安倍 誠明</div>
                 <div className="officer-role">取締役COO</div>
