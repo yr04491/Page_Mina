@@ -15,13 +15,13 @@ const TopBar = ({ scrollToSection }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleDropdownClick = (section) => {
-    setAboutOpen(false);
-    if (isMobile) setMobileNavOpen(false);
-    requestAnimationFrame(() => {
-      scrollToSection(section);
-    });
-  };
+ const handleDropdownClick = (section) => {
+  setAboutOpen(false);
+  if (isMobile) setMobileNavOpen(false);
+  requestAnimationFrame(() => {
+    scrollToSection(section);
+  });
+};
 
   return (
     <header className="topbar">
@@ -89,10 +89,19 @@ const CompanyPage = () => {
     if (ref && ref.current) {
       const header = document.querySelector('.topbar');
       const headerHeight = header ? header.offsetHeight : 0;
-      const rect = ref.current.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const top = rect.top + scrollTop - headerHeight - 8;
-      window.scrollTo({ top, behavior: 'smooth' });
+      
+      // スクロールするターゲット要素の位置を取得
+      const targetPosition = ref.current.getBoundingClientRect().top;
+      
+      // 現在の表示位置からの相対的な距離を計算
+      // ヘッダーの高さを考慮して少し余裕を持たせる
+      const offset = targetPosition - headerHeight - 8;
+      
+      // window.scrollByを使って相対的にスクロール
+      window.scrollBy({
+        top: offset,
+        behavior: 'smooth'
+      });
     }
   };
 
